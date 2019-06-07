@@ -4,10 +4,8 @@ import java.util.LinkedList;
 
 public class Main {
 
-    //private static final int KEVIN_BACON = 102;
-    //private static final int HILARY_DUFF = 1742;
-    private static final int KEVIN_BACON = 9;
-    private static final int HILARY_DUFF = 2;
+    private static final int KEVIN_BACON = 102;
+    private static final int HILARY_DUFF = 240381;
 
 
     public static void main(String[] args) {

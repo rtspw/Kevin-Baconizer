@@ -14,7 +14,7 @@ public class ActorGraph {
 
     public static void loadMovieToAndFromActorMaps() {
         System.out.println("Loading movie to actor maps...");
-        try (BufferedReader reader = new BufferedReader(new FileReader("./data/fake.tsv"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("./data/sortedHyperFiltered.tsv"))) {
             String currentLine;
             while ((currentLine = reader.readLine()) != null) {
                 String[] tokens = currentLine.split("\\t");
@@ -55,13 +55,13 @@ public class ActorGraph {
         }
 
         while (!BFSQueue.isEmpty()) {
-            System.out.println(BFSQueue);
+            //System.out.println(BFSQueue);
             Movie movie = BFSQueue.remove();
-            System.out.println("Looking at " + movie);
+            //System.out.println("Looking at " + movie);
             if (movie.wasVisited()) continue;
             movie.setVisited();
             for (Actor actor : movie.getActors()) {
-                System.out.println("Checking " + actor + " who acted in " + actor.getMovieList());
+                //System.out.println("Checking " + actor + " who acted in " + actor.getMovieList());
                 if (actor.wasVisited()) continue;
                 actor.setVisited();
                 actor.setPrevMovie(movie);
