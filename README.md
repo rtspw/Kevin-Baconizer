@@ -6,4 +6,6 @@ Get bacon numbers for actors.
 
 Currently, this requires tab-separated files provided by **IMDB** at https://www.imdb.com/interfaces/.
 Hopefully it won't in the future.
+
 This is put in a `data` folder at the project root.
+After adding the files, run process.sh to preprocess the files.
