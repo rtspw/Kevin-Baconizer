@@ -6,9 +6,13 @@ public class BaconPath {
 
     private LinkedList<Movie> BFSQueue = new LinkedList<>();
     private LinkedList<BaconNode> path = new LinkedList<>();
-    boolean pathExists = false;
+    private int startActorID;
+    private int endActorID;
+    private boolean pathExists = false;
 
     public BaconPath(int startActorID, int endActorID) {
+        this.startActorID = startActorID;
+        this.endActorID = endActorID;
         Actor endActor = findPath(startActorID, endActorID);
         if (!(endActor == null)) {
             pathExists = true;
@@ -24,10 +28,34 @@ public class BaconPath {
         return path;
     }
 
+    public String getPathText() {
+        if (!pathExists) return "No Path Found.";
+        StringBuilder pathText = new StringBuilder();
+        for (BaconNode node : path) {
+            if (node.getType() == NodeType.ACTOR) {
+                pathText.append("\"");
+                pathText.append(node.getName());
+                pathText.append("\"");
+                pathText.append("\nacted in the movie\n");
+            } else {
+                pathText.append("\"");
+                pathText.append(node.getName());
+                pathText.append("\"");
+                pathText.append("\nwhich had the actor\n");
+            }
+        }
+        pathText.append("\"");
+        pathText.append(new Actor(startActorID).getName());
+        pathText.append("\"");
+        return pathText.toString();
+    }
+
     private void tracebackPath(Actor endActor) {
         Actor tracebackActor = endActor;
         Movie tracebackMovie = tracebackActor.getPrevMovie();
         while (tracebackMovie != null) {
+            System.out.println(tracebackActor);
+            System.out.println(tracebackMovie);
             path.add(tracebackActor);
             path.add(tracebackMovie);
             tracebackActor = tracebackMovie.getPrevActor();
@@ -66,5 +94,10 @@ public class BaconPath {
             movie.setPrevActor(actor);
             BFSQueue.add(movie);
         }
+    }
+
+    @Override
+    public String toString() {
+        return getPathText();
     }
 }

@@ -10,9 +10,11 @@ public class Actor implements BaconNode {
 
     public static HashMap<Integer, String> actorIDToNameMap = new HashMap<>();
 
-    static {
+    private static final String NAME_FILE = "./data/simplified.name.basics.tsv";
+
+    public static void load() {
         System.out.println("Loading actorIDToNameMap...");
-        try (BufferedReader reader = new BufferedReader(new FileReader("./data/simplified.name.basics.tsv"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(NAME_FILE))) {
             reader.readLine();
             String currentLine;
             while ((currentLine = reader.readLine()) != null) {
@@ -52,6 +54,14 @@ public class Actor implements BaconNode {
     @Override
     public boolean wasVisited() {
         return visited;
+    }
+
+    @Override
+    public String getName() { return actorIDToNameMap.getOrDefault(id, "Unknown Name"); }
+
+    @Override
+    public NodeType getType() {
+        return NodeType.ACTOR;
     }
 
     public void addMovie(Movie movie) {

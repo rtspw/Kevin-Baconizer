@@ -1,13 +1,37 @@
 package BaconFinder;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.stream.Collectors;
+
+import static BaconFinder.Util.*;
 
 public class Movie implements BaconNode {
     private int id;
     private boolean visited = false;
     private Actor prevActor;
     private ArrayList<Actor> actors = new ArrayList<>();
+
+    public static HashMap<Integer, String> movieIDToNameMap = new HashMap<>();
+
+    private static final String TITLE_FILE = "./data/simplified.title.basics.tsv";
+
+    public static void load() {
+        System.out.println("Loading movieIDToTitleMap...");
+        try (BufferedReader reader = new BufferedReader(new FileReader(TITLE_FILE))) {
+            reader.readLine();
+            String currentLine;
+            while ((currentLine = reader.readLine()) != null) {
+                String[] tokens = currentLine.split("\\t");
+                movieIDToNameMap.put(convertIDToInt(tokens[0]), tokens[1]);
+            }
+        } catch (Exception err) {
+            System.out.println(err.getMessage());
+        }
+        System.out.println("Movie ID to Title Map loading complete!");
+    }
 
     Movie(int id) {
         this.setID(id);
@@ -31,6 +55,14 @@ public class Movie implements BaconNode {
     @Override
     public boolean wasVisited() {
         return visited;
+    }
+
+    @Override
+    public String getName() { return movieIDToNameMap.getOrDefault(id, "Unknown name"); }
+
+    @Override
+    public NodeType getType() {
+        return NodeType.MOVIE;
     }
 
     public void addActor(Actor actor) {
