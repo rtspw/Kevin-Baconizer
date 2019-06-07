@@ -3,29 +3,32 @@ package BaconFinder;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class Movie {
+public class Movie implements BaconNode {
     private int id;
     private boolean visited = false;
-    private Movie prevMovie;
     private Actor prevActor;
     private ArrayList<Actor> actors = new ArrayList<>();
 
     Movie(int id) {
-        this.setId(id);
+        this.setID(id);
     }
 
-    public int getId() {
+    @Override
+    public int getID() {
         return id;
     }
 
-    public void setId(int id) {
+    @Override
+    public void setID(int id) {
         this.id = id;
     }
 
+    @Override
     public void setVisited() {
         this.visited = true;
     }
 
+    @Override
     public boolean wasVisited() {
         return visited;
     }
@@ -40,14 +43,6 @@ public class Movie {
 
     public void clearActors() {
         actors.clear();
-    }
-
-    public Movie getPrevMovie() {
-        return prevMovie;
-    }
-
-    public void setPrevMovie(Movie prevMovie) {
-        this.prevMovie = prevMovie;
     }
 
     public Actor getPrevActor() {

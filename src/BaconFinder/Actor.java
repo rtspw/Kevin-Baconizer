@@ -6,18 +6,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import static BaconFinder.Util.*;
 
-public class Actor {
+public class Actor implements BaconNode {
 
     public static HashMap<Integer, String> actorIDToNameMap = new HashMap<>();
 
     static {
         System.out.println("Loading actorIDToNameMap...");
-        try (BufferedReader reader = new BufferedReader(new FileReader("./data/filteredNames.tsv"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("./data/simplified.name.basics.tsv"))) {
             reader.readLine();
             String currentLine;
             while ((currentLine = reader.readLine()) != null) {
                 String[] tokens = currentLine.split("\\t");
-                actorIDToNameMap.put(convertIDToInt(tokens[0]), tokens[1] + " " + tokens[2]);
+                actorIDToNameMap.put(convertIDToInt(tokens[0]), tokens[1]);
             }
         } catch (Exception err) {
             System.out.println(err.getMessage());
@@ -27,7 +27,6 @@ public class Actor {
 
     private int id;
     private boolean visited = false;
-    private Actor prevActor;
     private Movie prevMovie;
     private ArrayList<Movie> movieList = new ArrayList<>();
 
@@ -35,27 +34,24 @@ public class Actor {
         this.id = id;
     }
 
+    @Override
     public int getID() {
         return id;
     }
 
+    @Override
     public void setID(int id) {
         this.id = id;
     }
 
-    void setVisited() {
+    @Override
+    public void setVisited() {
         visited = true;
     }
-    boolean wasVisited() {
+
+    @Override
+    public boolean wasVisited() {
         return visited;
-    }
-
-    public Actor getPrevActor() {
-        return prevActor;
-    }
-
-    public void setPrevActor(Actor prevActor) {
-        this.prevActor = prevActor;
     }
 
     public void addMovie(Movie movie) {
