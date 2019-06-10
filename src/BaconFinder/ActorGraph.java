@@ -11,8 +11,8 @@ public class ActorGraph {
     public static HashMap<Integer, Movie> movieIDToNode = new HashMap<>();
     public static HashMap<Integer, Actor> actorIDToNode = new HashMap<>();
 
-    private static final String PRINCIPALS_FILE = "./data/simplified.title.principals.tsv";
-    //private static final String PRINCIPALS_FILE = "./data/fake.tsv";
+//    private static final String PRINCIPALS_FILE = "./data/simplified.title.principals.tsv";
+    private static final String PRINCIPALS_FILE = "./data/fake.tsv";
 
     public static void load() {
         System.out.println("Loading movie to actor maps...");

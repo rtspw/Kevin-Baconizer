@@ -1,32 +1,11 @@
 package BaconFinder;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.HashMap;
-import static BaconFinder.Util.*;
+import BaconDB.BaconConnection;
 
 public class Actor implements BaconNode {
 
-    public static HashMap<Integer, String> actorIDToNameMap = new HashMap<>();
-
-    private static final String NAME_FILE = "./data/simplified.name.basics.tsv";
-
-    public static void load() {
-        System.out.println("Loading actorIDToNameMap...");
-        try (BufferedReader reader = new BufferedReader(new FileReader(NAME_FILE))) {
-            reader.readLine();
-            String currentLine;
-            while ((currentLine = reader.readLine()) != null) {
-                String[] tokens = currentLine.split("\\t");
-                actorIDToNameMap.put(convertIDToInt(tokens[0]), tokens[1]);
-            }
-        } catch (Exception err) {
-            System.out.println(err.getMessage());
-        }
-        System.out.println("ActorIDToNameMap loading complete!");
-    }
-
+    private BaconConnection connection = BaconConnection.getInstance();
     private int id;
     private boolean visited = false;
     private Movie prevMovie;
@@ -57,7 +36,7 @@ public class Actor implements BaconNode {
     }
 
     @Override
-    public String getName() { return actorIDToNameMap.getOrDefault(id, "Unknown Name"); }
+    public String getName() { return connection.getActorNameFromID(id); }
 
     @Override
     public NodeType getType() {
@@ -82,7 +61,7 @@ public class Actor implements BaconNode {
 
     @Override
     public String toString() {
-        return "Actor[" + id + ", " + actorIDToNameMap.getOrDefault(id, "Unknown Name") +"]";
+        return "Actor[" + id + ", " + getName() +"]";
     }
 
     @Override
